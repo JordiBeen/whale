@@ -18,6 +18,22 @@ class User(Base):
     lastname = Column(String)
     email = Column(String)
 
+    def __json__(self):
+        # set fields here
+        fields = ("id",
+                  "username",
+                  "firstname",
+                  "infix",
+                  "lastname",
+                  "email"
+                  )
+
+        retval = dict((k, getattr(self, k, None)) for k in fields)
+        return retval
+
+    def to_json(self):
+        return self.__json__()
+
 
 def get_user(id_=None):
     q = DBSession.query(User)
@@ -25,3 +41,8 @@ def get_user(id_=None):
         q = q.filter(User.id == id_)
 
     return q.first()
+
+
+def list_users():
+    q = DBSession.query(User)
+    return q.all()
