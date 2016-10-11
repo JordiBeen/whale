@@ -1,8 +1,7 @@
 # encoding: utf-8
 import logging
 
-from sqlalchemy import (Column, Integer, String, ForeignKey)
-from sqlalchemy.orm import relationship
+from sqlalchemy import (Column, Integer, String)
 from .meta import DBSession, Base
 
 log = logging.getLogger(__name__)
@@ -13,8 +12,6 @@ class Answer(Base):
 
     id = Column(Integer, primary_key=True)
     answer = Column(String)
-    function_id = Column(Integer, ForeignKey('function.id'))
-    function = relationship('Function', backref='answer')
 
     def __json__(self):
         # set fields here
@@ -23,7 +20,6 @@ class Answer(Base):
                   )
 
         retval = dict((k, getattr(self, k, None)) for k in fields)
-        retval['function'] = self.answer.to_json()
         return retval
 
     def to_json(self):

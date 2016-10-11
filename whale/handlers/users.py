@@ -13,6 +13,7 @@ def users_list(request):
     users = list_users()
 
     log.info("{} Start of log: '{}' {}".format("-" * 40, "New request:", "-" * 40))
+    log.info("{} Start of log: '{}' {}".format("-" * 40, "USER", "-" * 40))
     log.info(request)
     log.info("{} End of log: '{}' {}".format("-" * 40, "End of request", "-" * 40))
 

@@ -38,6 +38,6 @@ def get_question(id_=None):
     return q.first()
 
 
-def get_questions():
+def list_questions():
     q = DBSession.query(Question)
     return q.all()

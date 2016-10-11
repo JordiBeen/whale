@@ -15,7 +15,6 @@ from ..models import persist
 from ..models.user import User, get_user # noqa
 from ..models.question import Question # noqa
 from ..models.answer import Answer # noqa
-from ..models.function import Function # noqa
 
 
 log = logging.getLogger(__name__)
