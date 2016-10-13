@@ -40,18 +40,13 @@ def question_post(request):
 
     return_data['status'] = 'OK'
 
-    # User asking to vibrate
-    if 'vibrate' in message:
-        return_data['answer'] = 'Okay, how long should I vibrate?'
-
     # User answers to a question asked
     if answer_to:
         # User is answering how long to vibrate
         if all(x in answer_to for x in ['how', 'long', 'vibrate']):
             if string_has_number(message):
                 length = get_number_from_string(message)
-                if 'second' in message:
-                    length = length
+                length = length * 1000
                 if 'minute' in message:
                     length = length * 60
                 if 'hour' in message:
@@ -60,6 +55,24 @@ def question_post(request):
                 return_data['function'] = {}
                 return_data['function']['name'] = 'vibrate'
                 return_data['function']['length'] = length
+        # User is answering how it's going
+        if all(x in answer_to for x in ['how', 'are', 'you']):
+            return_data['answer'] = 'I\'m fine, thanks!'
+
+    # User saying hi
+    if any(x in message for x in ['hi', 'hello', 'hey']):
+        return_data['answer'] = 'Hey, how are you?'
+
+    # User asking for help
+    if any(x in message for x in ['help', '?']):
+        return_data['answer'] = 'My name is Sexy Assistant, I can assist you '\
+            'with all your needs. '\
+            'Try asking me to vibrate for you to get '\
+            'started.'
+
+    # User asking to vibrate
+    if 'vibrate' in message:
+        return_data['answer'] = 'Okay, how long should I vibrate?'
 
     return {
         'data': return_data
